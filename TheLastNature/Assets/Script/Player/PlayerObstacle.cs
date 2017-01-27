@@ -28,6 +28,7 @@ public class PlayerObstacle : ActorBehaviour
             MovingFloor script = other.GetComponent<MovingFloor>();
             fastTransform.Translate(script.GetSpeed());
         }
+
         if (other.tag == Define.TAG_GROUND_LAYER_1)
         {
             scPlayerMove.SetStandGround(true);
@@ -58,19 +59,6 @@ public class PlayerObstacle : ActorBehaviour
             if (Input.GetKey(KeyCode.E))
                 gameObject.transform.Translate(4.0f, 0.0f, 0.0f);
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.name == Define.NAME_LADDER)
-            scPlayerMove.SetLadder(true);
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-
-        if (other.name == Define.NAME_LADDER)
-            scPlayerMove.SetLadder(false);
     }
 
     public void SetBoxInstanceIDClear() { nBoxMovingInstanceID = 0; }

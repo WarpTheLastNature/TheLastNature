@@ -12,7 +12,7 @@ public class PlayerMove : ActorBehaviour {
     //Player Jump
     public float fJumpPower     = 7.0f;
     public float fJumpDuringTime = 7.0f;
-    public float fJumpDownPower = 2.0f;
+    public float fJumpDownPower = 950.0f;
 
     //Ladder
     bool bLadder = false;
@@ -56,15 +56,17 @@ public class PlayerMove : ActorBehaviour {
         if (Input.GetKey(KeyCode.RightArrow)) veolcity.x =  fSpeed;
 
 
-        if (Input.GetKey(KeyCode.DownArrow))   veolcity.y = -fSpeed;
-        if (Input.GetKey(KeyCode.UpArrow))     veolcity.y = fSpeed;
+       // if (Input.GetKey(KeyCode.DownArrow))   veolcity.y = -fSpeed;
+       // if (Input.GetKey(KeyCode.UpArrow))     veolcity.y = fSpeed;
+
+
 
 
         if (bStandingGround & !bIsJump & Input.GetKeyDown(KeyCode.Space))
         {
+            rigid.AddForce(Vector2.up * fJumpDownPower);
             bIsJump = true;
             bStandingGround = false;
-            fJump = fJumpDuringTime;
         }
 
         Jump();
