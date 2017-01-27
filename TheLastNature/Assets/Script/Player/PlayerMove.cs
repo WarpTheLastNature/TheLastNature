@@ -10,8 +10,8 @@ public class PlayerMove : ActorBehaviour {
     public float fSpeed = 5.0f;
 
     //Player Jump
-    public float fJumpPower     = 7.0f;
-    public float fJumpDuringTime = 7.0f;
+    //public float fJumpPower     = 7.0f;
+    //public float fJumpDuringTime = 7.0f;
     public float fJumpDownPower = 950.0f;
 
     //Ladder
@@ -21,8 +21,8 @@ public class PlayerMove : ActorBehaviour {
 
     //private ----------
     Vector2 veolcity;
-    float fJump;
-    bool bIsJump;
+    //float fJump;
+    //bool bIsJump;
     bool bStandingGround;
 
     public override void Awake()
@@ -39,8 +39,8 @@ public class PlayerMove : ActorBehaviour {
     void Init()
     {
         veolcity = new Vector2(0.0f, 0.0f);
-        fJump = 0.0f;
-        bIsJump = false;
+        //fJump = 0.0f;
+        //bIsJump = false;
         bLadder = false;
         rigid.gravityScale = 9.8f;
         fLastGrivateSclae = rigid.gravityScale;
@@ -62,10 +62,10 @@ public class PlayerMove : ActorBehaviour {
 
 
 
-        if (bStandingGround & !bIsJump & Input.GetKeyDown(KeyCode.Space))
+        if (bStandingGround & Input.GetKeyDown(KeyCode.Space))
         {
             rigid.AddForce(Vector2.up * fJumpDownPower);
-            bIsJump = true;
+            //bIsJump = true;
             bStandingGround = false;
         }
 
@@ -89,26 +89,26 @@ public class PlayerMove : ActorBehaviour {
 
     void Jump()
     {
-        if(bIsJump == false)
-        {
-            if(bStandingGround)
-            {
-                rigid.gravityScale = 9.8f;
-            }
-            else
-            {
-                rigid.gravityScale = 1.0f;
-            }
-        }
-
-        if (fJump == 0)
-        {
-            bIsJump = false;
-            return;
-        }
-
-        fJump--;
-        veolcity.y = fJump;
+        //if(bIsJump == false)
+        //{
+        //    if(bStandingGround)
+        //    {
+        //        rigid.gravityScale = 9.8f;
+        //    }
+        //    else
+        //    {
+        //        rigid.gravityScale = 1.0f;
+        //    }
+        //}
+        //
+        //if (fJump == 0)
+        //{
+        //    bIsJump = false;
+        //    return;
+        //}
+        //
+        //fJump--;
+        //veolcity.y = fJump;
 
     }
 
