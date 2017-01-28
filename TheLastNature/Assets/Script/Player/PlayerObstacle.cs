@@ -38,23 +38,7 @@ public class PlayerObstacle : ActorBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.name == Define.NAME_BOX)
-        {
-            if (Input.GetKey(KeyCode.E))
-            {
-                int id = other.GetInstanceID();
-
-                if (nBoxMovingInstanceID == 0 || nBoxMovingInstanceID == id)
-                {
-                    BoxScript script = other.GetComponent<BoxScript>();
-                    script.BoxTouch(true);
-                    nBoxMovingInstanceID = id;
-                }
-
-            }
-        }
-
-        if (other.name == Define.FIRST_LIGHT_TRIGGER)
+        if (other.name == Define.NAME_FIRST_LIGHT_TRIGGER)
         {
             if (Input.GetKey(KeyCode.E))
                 gameObject.transform.Translate(4.0f, 0.0f, 0.0f);

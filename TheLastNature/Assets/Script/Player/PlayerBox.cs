@@ -4,28 +4,58 @@ using UnityEngine;
 
 public class PlayerBox : ActorBehaviour {
 
-    public float distance = 5f;
-    public int colliderCount = 0;
-    public LayerMask boxMask;
+    public float distance = 5.0f;
+    public LayerMask boxMask = Define.LAYER_INT_BOX;
 
-    GameObject box;
 
-	void Update ()
+    public Vector3 LayPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+    GameObject box_gameObject;
+    Rigidbody2D box_rigid2D;
+    FixedJoint2D box_fixedJoin2D;
+
+
+	void FixedUpdate ()
     {
         Physics2D.queriesStartInColliders = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * transform.localScale.x, distance, boxMask);
+        RaycastHit2D hit = Physics2D.Raycast((transform.position + LayPosition), Vector2.right * transform.localScale.x, distance, boxMask);
 
-        if (hit.collider != null && Input.GetKey(KeyCode.E) && hit.collider.gameObject.name == "box_obj")
+        if (hit.collider != null && Input.GetKey(KeyCode.E))
         {
-            print("hit"+ colliderCount++);
-            box = hit.collider.gameObject;
-            box.GetComponent<FixedJoint2D>().enabled = true;
-            box.GetComponent<FixedJoint2D>().connectedBody = this.GetComponent<Rigidbody2D>();
+
+            box_gameObject  = hit.collider.gameObject;
+            box_rigid2D     = box_gameObject.GetComponent<Rigidbody2D>();
+            box_fixedJoin2D = box_gameObject.GetComponent<FixedJoint2D>();
+
+            //Rigid2D setting
+           // box_rigid2D.bodyType = RigidbodyType2D.Dynamic;
+            //box_rigid2D.mass = 0.0f;
+
+            //Joint connect
+            box_fixedJoin2D.enabled = true;
+            box_fixedJoin2D.connectedBody = rigid2D;
+
+            Vector2 otherV2 = (Vector2)hit.collider.gameObject.transform.position;
+            v2 = (Vector2)fastTransform.position;
+
+            //fixed Joint Setting
+            box_fixedJoin2D.connectedAnchor = new Vector2(otherV2.x - v2.x, 0.0f);
+
         }
+
         else if(Input.GetKeyUp(KeyCode.E))
         {
-            if(box != null)
-                box.GetComponent<FixedJoint2D>().enabled = false;
+            if(box_fixedJoin2D != null)
+            {
+                //box_rigid2D.mass = 300.0f;
+               // box_rigid2D.bodyType = RigidbodyType2D.Static;
+
+                box_fixedJoin2D.enabled = false;
+                box_fixedJoin2D.connectedBody = null;
+
+                box_rigid2D = null;
+                box_gameObject = null;
+            }
         }
 
     }
@@ -33,7 +63,7 @@ public class PlayerBox : ActorBehaviour {
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(transform.position, (Vector2)transform.position + Vector2.right * transform.localScale.x * distance);
+        Gizmos.DrawLine((transform.position + LayPosition), (Vector2)(transform.position + LayPosition) + Vector2.right * transform.localScale.x * distance);
     }
 
 }

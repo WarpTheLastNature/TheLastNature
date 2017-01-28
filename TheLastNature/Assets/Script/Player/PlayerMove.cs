@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMove : ActorBehaviour {
 
-    Rigidbody2D rigid;
-
     //Player Speed
     public float fSpeed = 5.0f;
 
@@ -28,8 +26,7 @@ public class PlayerMove : ActorBehaviour {
     public override void Awake()
     {
         base.Awake();
-        rigid = GetComponent<Rigidbody2D>();
-        rigid.gravityScale = 9.8f;// fJumpDownPower;
+        rigid2D.gravityScale = 9.8f;// fJumpDownPower;
         gameManager.Player = gameObject;
         bStandingGround = true;
     }
@@ -42,8 +39,8 @@ public class PlayerMove : ActorBehaviour {
         //fJump = 0.0f;
         //bIsJump = false;
         bLadder = false;
-        rigid.gravityScale = 9.8f;
-        fLastGrivateSclae = rigid.gravityScale;
+        rigid2D.gravityScale = 9.8f;
+        fLastGrivateSclae = rigid2D.gravityScale;
     }
 
 
@@ -64,7 +61,7 @@ public class PlayerMove : ActorBehaviour {
 
         if (bStandingGround & Input.GetKeyDown(KeyCode.Space))
         {
-            rigid.AddForce(Vector2.up * fJumpDownPower);
+            rigid2D.AddForce(Vector2.up * fJumpDownPower);
             //bIsJump = true;
             bStandingGround = false;
         }
@@ -73,12 +70,12 @@ public class PlayerMove : ActorBehaviour {
 
         if (bLadder)
         {
-            fLastGrivateSclae = rigid.gravityScale;
-            rigid.gravityScale = 0.0f;
+            fLastGrivateSclae = rigid2D.gravityScale;
+            rigid2D.gravityScale = 0.0f;
         }
         else
         {
-            rigid.gravityScale = fLastGrivateSclae;
+            rigid2D.gravityScale = fLastGrivateSclae;
         }
 
         // Moving

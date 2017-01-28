@@ -7,10 +7,10 @@ using UnityEngine;
 public class BackgroundScrolling : Actor
 {
 
-    public string TAG_BACKGROUND_LAYER_0 = Define.TAG_BACKGROUND_LAYER_0;
-    public string BACKGROUND_LAYER_LEFT = Define.BACKGROUND_LAYER_LEFT;
-    public string BACKGROUND_LAYER_CENTER = Define.BACKGROUND_LAYER_CENTER;
-    public string BACKGROUND_LAYER_RIGHT = Define.BACKGROUND_LAYER_RIGHT;
+    public string TAG_BACKGROUND_LAYER_0  = Define.TAG_BACKGROUND_LAYER_0;
+    public string BACKGROUND_LAYER_LEFT   = Define.NAME_BACKGROUND_LAYER_LEFT;
+    public string BACKGROUND_LAYER_CENTER = Define.NAME_BACKGROUND_LAYER_CENTER;
+    public string BACKGROUND_LAYER_RIGHT  = Define.NAME_BACKGROUND_LAYER_RIGHT;
 
     public GameObject[] backgroundList;
     public Vector3 LastPosition;
