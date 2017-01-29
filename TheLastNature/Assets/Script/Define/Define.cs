@@ -22,6 +22,10 @@ public static class Define
     public static string LAYER_STRING_BOX           = "Box";
     public static int    LAYER_INT_BOX              = 8;
 
+    public static string LAYER_STRING_MOVINGFLOOR   = "MovingFloor";
+    public static int LAYER_INT_MOVINGFLOOR         = 9;
+
+
 
     //Moving State
     public static bool MOVING_TYPE_HOR = true;

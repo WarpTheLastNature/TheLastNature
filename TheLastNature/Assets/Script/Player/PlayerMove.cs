@@ -12,6 +12,10 @@ public class PlayerMove : ActorBehaviour {
     //public float fJumpDuringTime = 7.0f;
     public float fJumpDownPower = 950.0f;
 
+    public Vector3 LayPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    public LayerMask LayerMask = Define.LAYER_INT_BOX;
+    public float Layerdistance = 2.0f;
+
     //Ladder
     bool bLadder = false;
     float fLastGrivateSclae = 0.0f;
@@ -47,68 +51,45 @@ public class PlayerMove : ActorBehaviour {
 
     void FixedUpdate()
     {
-        gameManager.Player = gameObject;
 
         if (Input.GetKey(KeyCode.LeftArrow))  veolcity.x = -fSpeed;
         if (Input.GetKey(KeyCode.RightArrow)) veolcity.x =  fSpeed;
 
 
-       // if (Input.GetKey(KeyCode.DownArrow))   veolcity.y = -fSpeed;
-       // if (Input.GetKey(KeyCode.UpArrow))     veolcity.y = fSpeed;
-
-
-
-
-        if (bStandingGround & Input.GetKeyDown(KeyCode.Space))
+        RaycastHit2D hit = Physics2D.Raycast((transform.position + LayPosition), Vector2.down * transform.localScale.x, Layerdistance, LayerMask);
+        if (hit.collider != null)
         {
-            rigid2D.AddForce(Vector2.up * fJumpDownPower);
-            //bIsJump = true;
-            bStandingGround = false;
-        }
 
-        Jump();
+            if (Input.GetKeyDown(KeyCode.Space) & bStandingGround)
+            {
+                rigid2D.AddForce(Vector2.up * fJumpDownPower);
+                bStandingGround = false;
 
-        if (bLadder)
-        {
-            fLastGrivateSclae = rigid2D.gravityScale;
-            rigid2D.gravityScale = 0.0f;
+                fLastGrivateSclae = rigid2D.gravityScale;
+                rigid2D.gravityScale = 0.0f;
+            }
+           if(hit.collider.tag == Define.TAG_MOVING_FLOOR)
+            {
+                MovingFloor script = hit.collider.gameObject.GetComponent<MovingFloor>();
+                fastTransform.Translate(script.GetSpeed());
+            }
         }
         else
         {
+            bStandingGround = true;
             rigid2D.gravityScale = fLastGrivateSclae;
+
         }
 
-        // Moving
+
         fastTransform.Translate(veolcity * Time.deltaTime);
         veolcity.x = 0.0f; veolcity.y = 0.0f;
 
     }
 
-    void Jump()
+    private void OnDrawGizmos()
     {
-        //if(bIsJump == false)
-        //{
-        //    if(bStandingGround)
-        //    {
-        //        rigid.gravityScale = 9.8f;
-        //    }
-        //    else
-        //    {
-        //        rigid.gravityScale = 1.0f;
-        //    }
-        //}
-        //
-        //if (fJump == 0)
-        //{
-        //    bIsJump = false;
-        //    return;
-        //}
-        //
-        //fJump--;
-        //veolcity.y = fJump;
-
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine((transform.position + LayPosition), (Vector2)(transform.position + LayPosition) + Vector2.down * transform.localScale.x * Layerdistance);
     }
-
-    public void SetStandGround(bool flag) { bStandingGround = flag; }
-    public void SetLadder(bool flag) { bLadder = flag; }
 }

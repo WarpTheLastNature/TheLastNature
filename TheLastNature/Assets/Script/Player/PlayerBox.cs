@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerBox : ActorBehaviour {
 
+    public float box_offset;
     public float distance = 5.0f;
     public LayerMask boxMask = Define.LAYER_INT_BOX;
 
@@ -17,8 +18,10 @@ public class PlayerBox : ActorBehaviour {
 
 	void FixedUpdate ()
     {
-        Physics2D.queriesStartInColliders = false;
+        //Physics2D.queriesStartInColliders = false;
         RaycastHit2D hit = Physics2D.Raycast((transform.position + LayPosition), Vector2.right * transform.localScale.x, distance, boxMask);
+
+        if(hit.collider == null) hit = Physics2D.Raycast((transform.position + LayPosition), Vector2.left * transform.localScale.x, distance, boxMask);
 
         if (hit.collider != null && Input.GetKey(KeyCode.E))
         {
@@ -39,7 +42,11 @@ public class PlayerBox : ActorBehaviour {
             v2 = (Vector2)fastTransform.position;
 
             //fixed Joint Setting
-            box_fixedJoin2D.connectedAnchor = new Vector2(otherV2.x - v2.x, 0.0f);
+
+            if (otherV2.x - v2.x <= 0)
+                box_fixedJoin2D.connectedAnchor = new Vector2(-0.5f, 0.0f);
+            else
+                box_fixedJoin2D.connectedAnchor = new Vector2(0.5f, 0.0f);
 
         }
 

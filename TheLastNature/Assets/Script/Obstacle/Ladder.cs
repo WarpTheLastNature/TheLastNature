@@ -16,11 +16,14 @@ public class Ladder : Actor
     {
         if(other.tag == Define.TAG_PALYER)
         {
-            if(Input.GetKey(KeyCode.UpArrow))
-                PlayerRigid.velocity = new Vector2(0, fSpeed);
+            v3 = gameManager.Player.transform.position;
+            v3.x = fastTransform.position.x;
 
-            else if(Input.GetKey(KeyCode.UpArrow))
-                PlayerRigid.velocity = new Vector2(0, -fSpeed);
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                gameManager.Player.transform.position = v3;
+                PlayerRigid.velocity = Vector2.up * fSpeed;//new Vector2(0, fSpeed);
+            }
 
         }
     }
