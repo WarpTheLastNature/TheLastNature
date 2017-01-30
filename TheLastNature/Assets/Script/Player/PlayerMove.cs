@@ -20,7 +20,6 @@ public class PlayerMove : ActorBehaviour {
     bool bLadder = false;
     float fLastGrivateSclae = 0.0f;
 
-
     //private ----------
     Vector2 veolcity;
     //float fJump;
@@ -52,6 +51,8 @@ public class PlayerMove : ActorBehaviour {
     void FixedUpdate()
     {
 
+       //float press = Input.GetAxis("Horizontal") * Time.deltaTime * 100;
+       //veolcity.x = press * fSpeed;
         if (Input.GetKey(KeyCode.LeftArrow))  veolcity.x = -fSpeed;
         if (Input.GetKey(KeyCode.RightArrow)) veolcity.x =  fSpeed;
 
@@ -80,7 +81,6 @@ public class PlayerMove : ActorBehaviour {
             rigid2D.gravityScale = fLastGrivateSclae;
 
         }
-
 
         fastTransform.Translate(veolcity * Time.deltaTime);
         veolcity.x = 0.0f; veolcity.y = 0.0f;
