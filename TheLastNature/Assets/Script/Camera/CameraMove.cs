@@ -5,6 +5,7 @@ public class CameraMove : Actor
 {
 	float offsetX;
     float fLastPositionX;
+    public float fSmothMoveGuide = 10.0f;
 
     public bool bCameraMoving = true;
     public GameObject camera_left_pivot;
@@ -42,6 +43,10 @@ public class CameraMove : Actor
         fLastPositionX = v3.x;
         v3.x = gameManager.Player.transform.position.x + offsetX;
 
+        float distance = Mathf.Abs(fLastPositionX - v3.x);
+        if(distance > fSmothMoveGuide)
+            StartCoroutine("SmothMove");
+
         transform.position = v3;
 
         if (false == bCameraMoving) return;
@@ -59,5 +64,20 @@ public class CameraMove : Actor
         }
         
 
+    }
+
+    IEnumerator SmothMove()
+    {
+        float fLerp = 0.0f;
+        float fStart = fLastPositionX;
+        float fEnd = v3.x;
+
+        while (fLerp <= 1.0f)
+        {
+            v3.x = Mathf.Lerp(fStart, fEnd, fLerp);
+            transform.position = v3;
+            fLerp += 0.01f;
+        }
+        yield return null;
     }
 }

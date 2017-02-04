@@ -1,8 +1,8 @@
-﻿Shader "Custom/YT/Stencil/DiffuseColor_NotEqualOne" {
+﻿Shader "Custom/YT/Stencil/TextureColor_NotEqualOne" {
 
 Properties
 {
-	_MainTex ("Base (RGB)", 2D) = "white" {}
+	_Texture ("Main Texture", Texture);
 }
 
 SubShader

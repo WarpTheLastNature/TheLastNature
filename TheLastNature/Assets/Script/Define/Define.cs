@@ -19,6 +19,10 @@ public static class Define
     public static string TAG_GROUND_LAYER_1         = "Background_Layer_1";
 
 
+
+    public static string LAYER_STRING_PLAYER        = "Player";
+    public static int       LAYER_INT_PLAYER        = 11;
+
     public static string LAYER_STRING_BOX           = "Box";
     public static int    LAYER_INT_BOX              = 8;
 
