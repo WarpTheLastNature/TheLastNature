@@ -14,6 +14,11 @@ public class CameraMove : Actor
     public GameObject left_boundary;
     public GameObject right_boundary;
 
+    bool bCoroutine = false;
+
+   private Vector3 smoothTime = new Vector3(0.0f, 0.0f, 0.0f);
+   public float maxSpeed = 1.0f;
+
     void Start()
     {
         camera_left_pivot  = GameObject.Find("CameraLeftPivot");
@@ -43,11 +48,10 @@ public class CameraMove : Actor
         fLastPositionX = v3.x;
         v3.x = gameManager.Player.transform.position.x + offsetX;
 
-        float distance = Mathf.Abs(fLastPositionX - v3.x);
-        if(distance > fSmothMoveGuide)
-            StartCoroutine("SmothMove");
+        transform.position = Vector3.SmoothDamp(transform.position, v3, ref smoothTime, maxSpeed);
 
-        transform.position = v3;
+
+       // transform.position = v3;
 
         if (false == bCameraMoving) return;
             
@@ -68,16 +72,22 @@ public class CameraMove : Actor
 
     IEnumerator SmothMove()
     {
+        bCoroutine = true;
+
         float fLerp = 0.0f;
         float fStart = fLastPositionX;
-        float fEnd = v3.x;
 
         while (fLerp <= 1.0f)
         {
-            v3.x = Mathf.Lerp(fStart, fEnd, fLerp);
+            float dist = Mathf.Lerp(fStart, v3.x, fLerp);
+            v3.x = dist;
+            print(dist);
             transform.position = v3;
-            fLerp += 0.01f;
+            fLerp += 0.1f;
+            yield return new WaitForSeconds(1f);
         }
+
+        bCoroutine = false;
         yield return null;
     }
 }
