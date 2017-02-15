@@ -56,20 +56,20 @@ public class PlayerMove : ActorBehaviour {
         if (Input.GetKey(KeyCode.LeftArrow))  veolcity.x = -fSpeed;
         if (Input.GetKey(KeyCode.RightArrow)) veolcity.x =  fSpeed;
 
-
         RaycastHit2D hit = Physics2D.Raycast((transform.position + LayPosition), Vector2.down * transform.localScale.x, Layerdistance, LayerMask);
         if (hit.collider != null)
         {
-
             if (Input.GetKeyDown(KeyCode.Space) & bStandingGround)
             {
                 rigid2D.AddForce(Vector2.up * fJumpDownPower);
                 bStandingGround = false;
-
-                fLastGrivateSclae = rigid2D.gravityScale;
-                rigid2D.gravityScale = 0.0f;
             }
-           if(hit.collider.tag == Define.TAG_MOVING_FLOOR)
+            else
+            {
+                bStandingGround = true;
+            }
+
+            if (hit.collider.tag == Define.TAG_MOVING_FLOOR)
             {
                 MovingFloor script = hit.collider.gameObject.GetComponent<MovingFloor>();
                 fastTransform.Translate(script.GetSpeed());
@@ -78,8 +78,6 @@ public class PlayerMove : ActorBehaviour {
         else
         {
             bStandingGround = true;
-            rigid2D.gravityScale = fLastGrivateSclae;
-
         }
 
         fastTransform.Translate(veolcity * Time.deltaTime);

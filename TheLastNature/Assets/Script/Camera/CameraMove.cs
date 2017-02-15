@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿  using UnityEngine;
 using System.Collections;
 
 public class CameraMove : Actor
@@ -14,23 +14,22 @@ public class CameraMove : Actor
     public GameObject left_boundary;
     public GameObject right_boundary;
 
-    bool bCoroutine = false;
-
    private Vector3 smoothTime = new Vector3(0.0f, 0.0f, 0.0f);
    public float maxSpeed = 1.0f;
 
+    public int CameraTriggerNumber;
+
+    CameraLockTrigger cameraLockTrigger;
+
     void Start()
     {
-        camera_left_pivot  = GameObject.Find("CameraLeftPivot");
-        camera_right_pivot = GameObject.Find("CameraRightPivot");
+        camera_left_pivot  = transform.FindChild(Define.NAME_CAMERA_LEFT_PIVOT).gameObject;
+        camera_right_pivot = transform.FindChild(Define.NAME_CAMERA_RIGHT_PIVOT).gameObject;// GameObject.Find("CameraRightPivot");
 
-        left_boundary  = GameObject.Find("LeftBoundary");
-        right_boundary = GameObject.Find("RightBoundary");
+        left_boundary  = GameObject.Find(Define.NAME_LEFT_LIMIT_BOUNDARY);
+        right_boundary = GameObject.Find(Define.NAME_RIGHT_LIMIT_BOUNDARY);
 
-
-        //float lx = left_boundary.transform.position.x;
-        //float rx = right_boundary.transform.position.x;
-        //fPivotDis = lx - rx;
+        cameraLockTrigger = GetComponent<CameraLockTrigger>();
 
         v3 = transform.position;
         v3.x = gameManager.Player.transform.position.x;
@@ -48,13 +47,7 @@ public class CameraMove : Actor
         fLastPositionX = v3.x;
         v3.x = gameManager.Player.transform.position.x + offsetX;
 
-        transform.position = Vector3.SmoothDamp(transform.position, v3, ref smoothTime, maxSpeed);
 
-
-       // transform.position = v3;
-
-        if (false == bCameraMoving) return;
-            
         if (camera_right_pivot.transform.position.x >= right_boundary.transform.position.x)
         {
             v3.x = fLastPositionX;
@@ -67,27 +60,9 @@ public class CameraMove : Actor
             transform.position = v3;
         }
         
-
+        else
+            transform.position = Vector3.SmoothDamp(transform.position, v3, ref smoothTime, maxSpeed);
     }
 
-    IEnumerator SmothMove()
-    {
-        bCoroutine = true;
-
-        float fLerp = 0.0f;
-        float fStart = fLastPositionX;
-
-        while (fLerp <= 1.0f)
-        {
-            float dist = Mathf.Lerp(fStart, v3.x, fLerp);
-            v3.x = dist;
-            print(dist);
-            transform.position = v3;
-            fLerp += 0.1f;
-            yield return new WaitForSeconds(1f);
-        }
-
-        bCoroutine = false;
-        yield return null;
-    }
+   
 }

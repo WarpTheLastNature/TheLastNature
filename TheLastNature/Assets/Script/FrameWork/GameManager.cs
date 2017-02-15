@@ -11,6 +11,8 @@ public class GameManager
 
     public GameObject Player;
 
+    public CameraLockTrigger CameraLockTrigger;
+
     public GameManager()
     {
         fGlobalTime = 0.0f;
@@ -26,6 +28,7 @@ public class GameManager
         bPlaying = true;
 
         Player = null;
+        
     }
 
     public bool IsPlaying() {return bPlaying;}
