@@ -50,7 +50,15 @@ public class JH_GrapLope : MonoBehaviour
             
                 JH_lopeHandle script = other.GetComponent<JH_lopeHandle>();
                 script.F_BlopeHandle();
-            
+
+            //-------------------------
+
+            Collider2D asdfaColl=GetComponent<Collider2D>();
+            //collider.isTrigger = true;
+            asdfaColl.isTrigger = true;
+
+            //-----------------------
+
         }
     }
 

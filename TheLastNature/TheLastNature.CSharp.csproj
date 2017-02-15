@@ -105,6 +105,8 @@
     <Compile Include="Assets\Script\Player\PlayerBox.cs" />
     <Compile Include="Assets\Script\Player\PlayerMove.cs" />
     <Compile Include="Assets\Script\Trigger\First_Door_Tirgger.cs" />
+    <Compile Include="Assets\Youngtae\Script\Light\DynamicLight.cs" />
+    <Compile Include="Assets\Youngtae\Script\Light\TablaSenoCoseno.cs" />
     <Compile Include="Assets\Youngtae\Script\Trigger\DoorTirgger.cs" />
     <Compile Include="Assets\Youngtae\Script\YT_Aniamtion.cs" />
     <Compile Include="Assets\Youngtae\Script\YT_CollisionTest.cs" />
@@ -128,8 +130,10 @@
     <None Include="Assets\Shader\DiffuseColor_NotEqualOne.shader" />
     <None Include="Assets\Shader\Mask_Color_OneZLess.shader" />
     <None Include="Assets\Shader\TextureBlending_NotEqualOne.shader" />
+    <None Include="Assets\Youngtae\Shader\Gradient-NoTexture-Radial-SingleColor-ToTransparent-RegularUV-AlphaBlend.shader" />
     <None Include="Assets\Youngtae\Shader\MaskShader.shader" />
     <None Include="Assets\Youngtae\Shader\MaskStudyShader.shader" />
+    <None Include="Assets\Youngtae\Shader\NoTexture.shader" />
     <None Include="Assets\Youngtae\Shader\Normal_Diffuse.shader" />
     <None Include="Assets\Youngtae\Shader\PragmaTestShader.shader" />
     <None Include="Assets\Youngtae\Shader\RedShader.shader" />
